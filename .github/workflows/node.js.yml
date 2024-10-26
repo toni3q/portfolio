@@ -12,29 +12,26 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x]
+        node-version: 20.16.0
 
     steps:
     - uses: actions/checkout@v4
 
-    # Imposta Node.js e utilizza la cache di npm
+    # node.js
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     
-    # Installa le dipendenze
+    # dependencies
     - name: Install dependencies
       run: npm install
 
-    # Compila il progetto
+    # build
     - name: Build Vue.js app
       run: npm run build
 
-    # Deploy su GitHub Pages
+    # deploy
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist # Specifica la directory di output del build Vue.js
